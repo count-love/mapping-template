@@ -41,9 +41,9 @@ function removeMarkers() {
 // replace the existing markers with a new set of markers
 function replaceMarkers(data) {
     removeMarkers();
-	data.forEach(function(row) {
+    data.forEach(function(row) {
        addMarker(row);
-	});
+    });
 }
 
 // zoom the map to fit the existing set of active markers
@@ -59,38 +59,38 @@ function fitToMarkers() {
 
 // reset the map to an overview of the contiguous US
 function resetMapView(map) {
-	map.fitBounds([
-		[24.926294766395593, -68.29101562500001],
-		[49.26780455063753, -124.98046875000001]
-	]);	
+    map.fitBounds([
+        [24.926294766395593, -68.29101562500001],
+        [49.26780455063753, -124.98046875000001]
+    ]); 
 }
 //--- end mapping functions
 
 
 //--- called after loading this javascript file
 jQuery(function($) {
-	
-	// create map
-	map = L.map('map', {
-		scrollWheelZoom: false
-	});
-	            	  
-	// reset view  
+    
+    // create map
+    map = L.map('map', {
+        scrollWheelZoom: false
+    });
+                      
+    // reset view  
     resetMapView(map);
-	
-	// specify Carto tiles
-	L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png', {
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution" target="_blank">CARTO</a>'
-	}).addTo(map);
-	
-	// load data, then add markers
-	 $.ajax({
-		dataType: "json",
-		url: "data.json"
-	}).done(function(response) {
-	
-		// store to global variable
-		data = response;
+    
+    // specify Carto tiles
+    L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution" target="_blank">CARTO</a>'
+    }).addTo(map);
+    
+    // load data, then add markers
+     $.ajax({
+        dataType: "json",
+        url: "data.json"
+    }).done(function(response) {
+    
+        // store to global variable
+        data = response;
 
         // add markers
         data.forEach(function(location) {
@@ -99,11 +99,11 @@ jQuery(function($) {
         
         // fit the map to the set of markers
         fitToMarkers();
-		
-	}).fail(function() {
+        
+    }).fail(function() {
         console.log("Could not load data.json");
-	});
-	
+    });
+    
 });
 
 }).call(this);
